@@ -20,6 +20,9 @@
 #' mixomics_data <- se_to_mixomics(se, assay_name = "counts", design_variable = "condition")
 #' }
 #'
+#' @importFrom methods is
+#' @importFrom SummarizedExperiment assay assayNames colData
+#' @importFrom mixOmics pls
 #' @export
 se_to_mixomics <- function(se_object, assay_name = "counts", design_variable) {
   # Input validation
@@ -80,6 +83,19 @@ se_to_mixomics <- function(se_object, assay_name = "counts", design_variable) {
   # Verify dimensions match
   if (nrow(X) != length(Y)) {
     stop("Number of samples in assay matrix and design variable do not match")
+  }
+  
+  # Validate mixOmics compatibility
+  if (nrow(X) < 3) {
+    warning("Very few samples (n < 3) may cause issues with mixOmics functions")
+  }
+  
+  if (ncol(X) < 2) {
+    warning("Very few features (n < 2) may cause issues with mixOmics functions")
+  }
+  
+  if (nlevels(Y) < 2) {
+    warning("Design variable has only one level. Most mixOmics functions require multiple groups.")
   }
   
   # Return list in mixOmics format

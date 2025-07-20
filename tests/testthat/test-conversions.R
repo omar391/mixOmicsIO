@@ -52,8 +52,18 @@ create_test_mixomics_result <- function(n_features = 20, n_components = 2) {
     )
   )
   
-  # Create mock result structure
+  # Create mock X and Y data (typical mixOmics components)
+  X_data <- matrix(rnorm(10 * n_features), ncol = n_features, 
+                   dimnames = list(paste0("sample_", 1:10), paste0("feature_", 1:n_features)))
+  Y_data <- factor(rep(c("control", "treatment"), length.out = 10))
+  
+  # Create mock result structure with all expected components
   mock_result <- list(
+    X = X_data,
+    Y = Y_data,
+    ncomp = n_components,
+    mode = "regression",
+    call = call("pls", X = quote(X), Y = quote(Y)),
     loadings = list(X = loadings_X),
     selected.var = list(X = sample(seq_len(n_features), 5)),
     explained_variance = c(0.3, 0.2),
@@ -126,13 +136,13 @@ test_that("se_to_mixomics validates input correctly", {
 })
 
 test_that("se_to_mixomics handles edge cases", {
-  # Test with minimal dataset
-  se_small <- create_test_se(n_samples = 2, n_features = 3)
+  # Test with small but reasonable dataset
+  se_small <- create_test_se(n_samples = 6, n_features = 3)
   result <- se_to_mixomics(se_small, "counts", "condition")
   
-  expect_equal(nrow(result$X), 2)
+  expect_equal(nrow(result$X), 6)
   expect_equal(ncol(result$X), 3)
-  expect_equal(length(result$Y), 2)
+  expect_equal(length(result$Y), 6)
 })
 
 test_that("se_to_mixomics converts design variable to factor", {
@@ -153,7 +163,7 @@ test_that("mixomics_to_se works with valid input", {
   expect_s4_class(enhanced_se, "SummarizedExperiment")
   
   # Check metadata
-  metadata <- SummarizedExperiment::metadata(enhanced_se)
+  metadata <- S4Vectors::metadata(enhanced_se)
   expect_true("mixomics_result" %in% names(metadata))
   expect_true("mixomics_analysis_date" %in% names(metadata))
   expect_true("mixomics_analysis_method" %in% names(metadata))
@@ -230,7 +240,7 @@ test_that("roundtrip conversion preserves data integrity", {
   )
   
   # Check that analysis results were added
-  expect_true("mixomics_result" %in% names(SummarizedExperiment::metadata(enhanced_se)))
+  expect_true("mixomics_result" %in% names(S4Vectors::metadata(enhanced_se)))
 })
 
 test_that("functions work with different data types", {

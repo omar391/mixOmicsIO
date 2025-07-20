@@ -21,6 +21,10 @@
 #' se_with_results <- mixomics_to_se(pls_result, se)
 #' }
 #'
+#' @importFrom methods is
+#' @importFrom S4Vectors metadata "metadata<-"
+#' @importFrom SummarizedExperiment rowData "rowData<-"
+#' @importFrom mixOmics explained_variance
 #' @export
 mixomics_to_se <- function(mixomics_result, original_se) {
   # Input validation
@@ -34,13 +38,32 @@ mixomics_to_se <- function(mixomics_result, original_se) {
     stop("mixomics_result must be a list (typical mixOmics result structure)")
   }
   
+  # Validate that this looks like a mixOmics result object
+  mixomics_classes <- c("mixo_pls", "mixo_plsda", "mixo_spls", "mixo_splsda", 
+                        "mixo_rcc", "mixo_pca", "mixo_ipca", "mixo_sipca",
+                        "block.pls", "block.plsda", "block.spls", "block.splsda")
+  
+  obj_class <- class(mixomics_result)[1]
+  if (!obj_class %in% mixomics_classes && !any(grepl("mixo|block", obj_class))) {
+    warning(sprintf("Object class '%s' is not a recognized mixOmics result class. Expected classes: %s", 
+                   obj_class, paste(mixomics_classes, collapse = ", ")))
+  }
+  
+  # Check for common mixOmics result components
+  expected_components <- c("X", "Y", "ncomp", "mode", "call")
+  missing_components <- setdiff(expected_components, names(mixomics_result))
+  if (length(missing_components) > 2) {  # Allow some flexibility
+    warning(sprintf("mixomics_result may not be a valid mixOmics object. Missing common components: %s", 
+                   paste(missing_components, collapse = ", ")))
+  }
+  
   # Create a copy of the original SummarizedExperiment
   enhanced_se <- original_se
   
   # Store complete mixOmics result in metadata
-  current_metadata <- SummarizedExperiment::metadata(enhanced_se)
+  current_metadata <- S4Vectors::metadata(enhanced_se)
   current_metadata$mixomics_result <- mixomics_result
-  SummarizedExperiment::metadata(enhanced_se) <- current_metadata
+  S4Vectors::metadata(enhanced_se) <- current_metadata
   
   # Extract and integrate feature-level results into rowData
   current_rowdata <- SummarizedExperiment::rowData(enhanced_se)
@@ -110,7 +133,7 @@ mixomics_to_se <- function(mixomics_result, original_se) {
   # Add analysis metadata for provenance
   current_metadata$mixomics_analysis_date <- Sys.Date()
   current_metadata$mixomics_analysis_method <- class(mixomics_result)[1]
-  SummarizedExperiment::metadata(enhanced_se) <- current_metadata
+  S4Vectors::metadata(enhanced_se) <- current_metadata
   
   # Return enhanced SummarizedExperiment
   enhanced_se
