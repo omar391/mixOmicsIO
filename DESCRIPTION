@@ -1,0 +1,28 @@
+Package: mixOmicsIO
+Title: Interoperability Between mixOmics and SummarizedExperiment Objects
+Version: 0.1.0
+Authors@R: 
+    person("Omar", "Researcher", , "omar@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0000-0000-0000"))
+Description: Provides seamless interoperability between the mixOmics multivariate 
+    analysis framework and Bioconductor's SummarizedExperiment objects. The package 
+    enables bidirectional conversion between data structures, eliminating complex 
+    data wrangling steps for researchers using both ecosystems.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Depends: 
+    R (>= 4.0.0)
+Imports:
+    methods,
+    SummarizedExperiment,
+    mixOmics
+Suggests: 
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    BiocStyle
+VignetteBuilder: knitr
+URL: https://github.com/username/mixOmicsIO
+BugReports: https://github.com/username/mixOmicsIO/issues
