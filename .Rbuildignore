@@ -1,7 +1,7 @@
 # Data files to ignore
-*.rda
-*.RData
-*.rds
+.*\.rda$
+.*\.RData$
+.*\.rds$
 
 # History files
 .Rhistory
@@ -14,17 +14,17 @@
 .Ruserdata
 
 # Example code in package build process
-*-Ex.R
+.*-Ex\.R$
 
 # Output files from R CMD build
-/*.tar.gz
+.*\.tar\.gz$
 
 # Output files from R CMD check
-/*.Rcheck/
+.*\.Rcheck/
 
 # RStudio files
-.Rproj.user/
-*.Rproj
+\.Rproj\.user/
+.*\.Rproj$
 
 # produced vignettes
 vignettes/*.html
@@ -34,12 +34,12 @@ vignettes/*.pdf
 .httr-oauth
 
 # knitr and R markdown default cache directories
-*_cache/
-/cache/
+.*_cache/
+^cache/
 
 # Temporary files created by R markdown
-*.utf8.md
-*.knit.md
+.*\.utf8\.md$
+.*\.knit\.md$
 
 # R Environment Variables
 .Renviron
@@ -48,8 +48,12 @@ vignettes/*.pdf
 docs/
 
 # translation temp files
-po/*~
+^po/.*~$
 
 # IDE
-.idea/
-.vscode/
+\.idea/
+\.vscode/
+
+# Project-specific directories
+^\.github/
+^\.task/

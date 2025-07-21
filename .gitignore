@@ -53,7 +53,5 @@ po/*~
 # IDE
 .idea/
 .vscode/
-
-# Task management and copilot instructions (for main branch)
 .task/
 .github/copilot-instructions.md
