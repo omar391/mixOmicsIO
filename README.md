@@ -19,7 +19,7 @@
 
 - 🔄 **Bidirectional Conversion**: Seamless conversion between `SummarizedExperiment` and mixOmics formats
 - 🔒 **Metadata Preservation**: Complete retention of sample and feature annotations
-- 📊 **Multi-Assay Support**: Flexible selection from multi-assay experiments  
+- 📊 **Multi-Assay Support**: Flexible selection from multi-assay experiments
 - 💾 **Result Integration**: Store mixOmics results directly in your original data structure
 - ✅ **Robust Validation**: Comprehensive input checking with actionable error messages
 - 🚀 **Performance Optimized**: Efficient handling of large datasets (tested up to 100k+ features)
@@ -48,8 +48,8 @@ library(SummarizedExperiment)
 library(mixOmics)
 
 # Convert SummarizedExperiment to mixOmics format
-mixomics_data <- se_to_mixomics(se_object,  
-                               assay_name = "counts",  
+mixomics_data <- se_to_mixomics(se_object,
+                               assay_name = "counts",
                                design_variable = "condition")
 
 # Perform your favorite mixOmics analysis
@@ -65,7 +65,7 @@ Here's a complete workflow demonstrating the package's capabilities:
 
 ```r
 library(mixOmicsIO)
-library(SummarizedExperiment) 
+library(SummarizedExperiment)
 library(mixOmics)
 
 # Starting with a SummarizedExperiment object
@@ -108,8 +108,8 @@ se <- SummarizedExperiment(
 
 # Step 1: Convert to mixOmics format
 cat("Converting SummarizedExperiment to mixOmics format...\n")
-mixomics_data <- se_to_mixomics(se,  
-                               assay_name = "counts",  
+mixomics_data <- se_to_mixomics(se,
+                               assay_name = "counts",
                                design_variable = "condition")
 
 # Explore the converted data
@@ -119,8 +119,8 @@ cat("Design variable levels:", levels(mixomics_data$Y), "\n")
 
 # Step 2: Perform multivariate analysis with mixOmics
 cat("Performing PLS-DA analysis...\n")
-plsda_result <- plsda(X = mixomics_data$X,  
-                     Y = mixomics_data$Y,  
+plsda_result <- plsda(X = mixomics_data$X,
+                     Y = mixomics_data$Y,
                      ncomp = 3)
 
 # You can also try other mixOmics methods:
@@ -141,7 +141,7 @@ cat("Analysis date:", as.character(metadata(se_enhanced)$mixomics_analysis_date)
 
 # Access feature-level results in rowData
 enhanced_features <- rowData(se_enhanced)
-cat("Feature annotations enhanced with",  
+cat("Feature annotations enhanced with",
     sum(grepl("mixomics_", colnames(enhanced_features))), "new columns\n")
 
 # Check which features were selected (if using sparse methods)
@@ -151,7 +151,7 @@ if ("mixomics_selected" %in% colnames(enhanced_features)) {
 }
 
 # Original data is perfectly preserved
-cat("Original data preserved:",  
+cat("Original data preserved:",
     identical(assay(se, "counts"), assay(se_enhanced, "counts")), "\n")
 ```
 
@@ -173,7 +173,7 @@ assays(se) <- list(
 
 # Use different assays for analysis
 mixomics_raw <- se_to_mixomics(se, "counts", "condition")
-mixomics_norm <- se_to_mixomics(se, "normalized", "condition")  
+mixomics_norm <- se_to_mixomics(se, "normalized", "condition")
 mixomics_log <- se_to_mixomics(se, "log2_counts", "condition")
 ```
 
@@ -201,13 +201,15 @@ age_data <- se_to_mixomics(se, "counts", "age")
 Converts a `SummarizedExperiment` to mixOmics-compatible format.
 
 **Parameters:**
+
 - `se_object`: A `SummarizedExperiment` object
-- `assay_name`: Character string specifying which assay to extract (default: "counts")  
+- `assay_name`: Character string specifying which assay to extract (default: "counts")
 - `design_variable`: Character string specifying the column in `colData` for the response variable
 
 **Returns:** List with components `X` (data matrix) and `Y` (design factor)
 
 **Key Features:**
+
 - Transposes data matrix (mixOmics expects samples as rows)
 - Converts design variables to factors
 - Comprehensive input validation
@@ -218,12 +220,14 @@ Converts a `SummarizedExperiment` to mixOmics-compatible format.
 Integrates mixOmics analysis results into a `SummarizedExperiment`.
 
 **Parameters:**
+
 - `mixomics_result`: Result object from any mixOmics analysis function
 - `original_se`: The original `SummarizedExperiment` object
 
 **Returns:** Enhanced `SummarizedExperiment` with integrated results
 
 **Integration Features:**
+
 - Complete results stored in `metadata()` slot
 - Feature loadings added to `rowData()`
 - Variable selection indicators added
@@ -237,7 +241,7 @@ The package includes comprehensive testing with 108+ test cases covering:
 - **Unit Tests** (33 tests): Core functionality validation
 - **Integration Tests** (75+ tests): Real-world scenarios including:
   - Realistic gene expression patterns
-  - Multiple assay types and design variables  
+  - Multiple assay types and design variables
   - Performance testing with large datasets
   - Edge cases and error conditions
   - Metadata preservation verification
@@ -247,18 +251,75 @@ All tests pass with comprehensive validation ensuring reliability in production 
 ## 📋 Requirements & Dependencies
 
 **System Requirements:**
+
 - R (≥ 4.0.0)
 
 **Core Dependencies:**
+
 - [SummarizedExperiment](https://bioconductor.org/packages/SummarizedExperiment/) (Bioconductor)
 - [mixOmics](http://mixomics.org/) (CRAN)
 - methods, S4Vectors (Base R packages)
 
 **Suggested Packages:**
+
 - [DESeq2](https://bioconductor.org/packages/DESeq2/) (for normalization examples)
 - [SingleCellExperiment](https://bioconductor.org/packages/SingleCellExperiment/) (extends compatibility)
 
-## 🐛 Troubleshooting & FAQ
+## Running Examples
+
+The package includes comprehensive examples demonstrating various use cases:
+
+### Using the Makefile (Recommended)
+
+```bash
+# Install dependencies and run all examples
+make install
+make examples
+
+# Run specific examples
+make basic_workflow       # Basic conversion workflow
+make multiclass_example   # Multi-class experimental design
+make integration_workflow # Complete bioinformatics pipeline
+
+# Run tests and validation
+make test                # Run package tests
+make validate           # Run tests + R CMD check
+```
+
+### Manual Execution
+
+```bash
+# Run examples individually from R
+Rscript examples/01_basic_workflow.R
+Rscript examples/02_multiclass_example.R
+Rscript examples/03_integration_workflow.R
+
+# Or from within R
+source("examples/01_basic_workflow.R")
+source("examples/02_multiclass_example.R")
+source("examples/03_integration_workflow.R")
+```
+
+### Available Examples
+
+1. **Basic Workflow** (`examples/01_basic_workflow.R`)
+   - Fundamental SE ↔ mixOmics conversion
+   - Simple PLS-DA analysis
+   - Data integrity validation
+
+2. **Multi-class Analysis** (`examples/02_multiclass_example.R`)
+   - Three-group experimental design
+   - Sparse PLS-DA with feature selection
+   - Cross-validation and variable importance
+
+3. **Integration Workflow** (`examples/03_integration_workflow.R`)
+   - Complete bioinformatics pipeline
+   - Multiple preprocessing strategies
+   - Comprehensive result integration and interpretation
+
+Each example is self-contained with synthetic data and detailed explanations of the workflow steps.
+
+## �🐛 Troubleshooting & FAQ
 
 ### Common Issues
 
@@ -308,6 +369,7 @@ If you use mixOmicsIO in your research, please cite:
 ```
 
 You should also cite the underlying packages:
+
 - **mixOmics**: Rohart et al. (2017). mixOmics: An R package for 'omics feature selection and multiple data integration. PLOS Computational Biology 13(11): e1005752.
 - **SummarizedExperiment**: Morgan M, Obenchain V, Hester J, Pagès H (2023). SummarizedExperiment: SummarizedExperiment container. R package.
 
