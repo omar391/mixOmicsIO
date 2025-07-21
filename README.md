@@ -1,8 +1,7 @@
-# mixOmicsIO <img src="man/figures/logo.png" align="right" height="139" alt="mixOmicsIO logo" />
+# mixOmicsIO <img src="man/figures/logo_modern.png" align="right" height="60" alt="mixOmicsIO logo" />
 
 > **Seamless Integration Between Bioconductor and mixOmics Ecosystems**
 
-[![R-CMD-check](https://img.shields.io/badge/R--CMD--check-passing-brightgreen)](https://github.com/username/mixOmicsIO/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![R version](https://img.shields.io/badge/R-%E2%89%A5%204.0.0-blue)](https://www.r-project.org/)
 [![Bioconductor](https://img.shields.io/badge/Bioconductor-SummarizedExperiment-green)](https://bioconductor.org/packages/SummarizedExperiment/)
