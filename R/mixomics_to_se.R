@@ -25,6 +25,7 @@
 #' @importFrom S4Vectors metadata "metadata<-"
 #' @importFrom SummarizedExperiment rowData "rowData<-"
 #' @importFrom mixOmics explained_variance
+#' @importFrom utils head
 #' @export
 mixomics_to_se <- function(mixomics_result, original_se) {
   # Input validation
