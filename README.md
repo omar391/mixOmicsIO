@@ -1,8 +1,7 @@
-# mixOmicsIO <img src="man/figures/logo.png" align="right" height="139" alt="mixOmicsIO logo" />
+# mixOmicsIO <img src="man/figures/logo_modern.png" align="right" height="60" alt="mixOmicsIO logo" />
 
 > **Seamless Integration Between Bioconductor and mixOmics Ecosystems**
 
-[![R-CMD-check](https://img.shields.io/badge/R--CMD--check-passing-brightgreen)](https://github.com/username/mixOmicsIO/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![R version](https://img.shields.io/badge/R-%E2%89%A5%204.0.0-blue)](https://www.r-project.org/)
 [![Bioconductor](https://img.shields.io/badge/Bioconductor-SummarizedExperiment-green)](https://bioconductor.org/packages/SummarizedExperiment/)
@@ -34,7 +33,7 @@
 if (!requireNamespace("devtools", quietly = TRUE)) {
     install.packages("devtools")
 }
-devtools::install_github("username/mixOmicsIO")
+devtools::install_github("omar391/mixOmicsIO")
 
 # Or install from CRAN (when available)
 # install.packages("mixOmicsIO")
@@ -338,15 +337,15 @@ A: Yes! `SingleCellExperiment` objects inherit from `SummarizedExperiment` and w
 ### Getting Help
 
 - 📖 **Documentation**: All functions include comprehensive help pages with examples
-- 🐛 **Bug Reports**: Open an [issue](https://github.com/username/mixOmicsIO/issues) with a reproducible example
-- 💬 **Questions**: Use the [discussions](https://github.com/username/mixOmicsIO/discussions) tab for usage questions
+- 🐛 **Bug Reports**: Open an [issue](https://github.com/omar391/mixOmicsIO/issues) with a reproducible example
+- 💬 **Questions**: Use the [discussions](https://github.com/omar391/mixOmicsIO/discussions) tab for usage questions
 - 📧 **mixOmics Help**: Visit [mixOmics documentation](http://mixomics.org/mixomics/) for analysis guidance
 
 ## 🤝 Contributing
 
 We welcome contributions! Here's how you can help:
 
-- 🐛 Report bugs or request features via [issues](https://github.com/username/mixOmicsIO/issues)
+- 🐛 Report bugs or request features via [issues](https://github.com/omar391/mixOmicsIO/issues)
 - 📝 Improve documentation or examples
 - 🧪 Add test cases for edge cases
 - 💻 Submit pull requests for bug fixes or new features
